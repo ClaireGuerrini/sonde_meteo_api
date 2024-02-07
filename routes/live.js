@@ -3,14 +3,17 @@ var router = express.Router();
 const fs = require("fs");
 const nmea = require('@drivetech/node-nmea')
 const {InfluxDB, Point} = require('@influxdata/influxdb-client')
+require('dotenv').config()
 
-const token = process.env.INFLUXDB_TOKEN
+
+const token = `${process.env.INFLUXDB_TOKEN}`
+
 const url = 'http://localhost:8086'
 
 
 
-let org = `test`
-let bucket = `new_test`
+let org = `projet_sonde`
+let bucket = `weather_data`
 const client = new InfluxDB({url, token})
 
 let queryClient = client.getQueryApi(org)
@@ -20,7 +23,7 @@ router.get('/', function(req, res, next) {
   
 
   
-  let fluxQuery = `from(bucket: "new_test")
+  let fluxQuery = `from(bucket: "weather_data")
     |> range(start: -30d)
     |> last()
     |> filter(fn: (r) => r._measurement == "weather")
