@@ -4,6 +4,8 @@ const fs = require("fs");
 const nmea = require('@drivetech/node-nmea')
 const {InfluxDB, Point} = require('@influxdata/influxdb-client')
 require('dotenv').config()
+const cors = require('cors');
+router.use(cors()); 
 
 
 const token = `${process.env.INFLUXDB_TOKEN}`
